@@ -14,6 +14,19 @@
 
     <h2>Student List</h2>
 
+    <!-- Activity 22: Search Students -->
+    <form action="/students/search" method="GET">
+        <input
+            type="text"
+            name="keyword"
+            placeholder="Search by student ID, name, or course"
+        >
+        <button type="submit">Search</button>
+        <a href="/">Clear Search</a>
+    </form>
+
+    <br>
+
     <table border="1" cellpadding="10">
         <tr>
             <th>ID</th>

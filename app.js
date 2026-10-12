@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 
         res.render('index', { students: results });
     });
-}); // IMPORTANT: Close the homepage route here!
+});
 
 // Activity 12: Display the Add Student Form
 app.get('/students/add', (req, res) => {
@@ -82,6 +82,41 @@ app.post('/students/add', (req, res) => {
 
         res.redirect('/');
     });
+});
+
+// Activity 22: Search Students
+app.get('/students/search', (req, res) => {
+    const keyword = req.query.keyword || '';
+
+    const sql = `
+        SELECT * FROM students
+        WHERE student_id LIKE ?
+        OR first_name LIKE ?
+        OR last_name LIKE ?
+        OR course LIKE ?
+    `;
+
+    const searchValue = `%${keyword}%`;
+
+    db.query(
+        sql,
+        [
+            searchValue,
+            searchValue,
+            searchValue,
+            searchValue
+        ],
+        (err, results) => {
+            if (err) {
+                console.error('Search error:', err);
+                return res.status(500).send('Search error');
+            }
+
+            res.render('index', {
+                students: results
+            });
+        }
+    );
 });
 
 // Start the server
